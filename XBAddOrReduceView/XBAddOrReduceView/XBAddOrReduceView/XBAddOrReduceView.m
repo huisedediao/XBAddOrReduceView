@@ -109,37 +109,34 @@
     btn.img_highlighted = highlightImg;
     btn.size_image = CGSizeMake(GWidthFactorFun(18), GWidthFactorFun(18));
     btn.bl_click = ^(XBButton *weakBtn) {
+        NSInteger tempCount;
         if (weakBtn.tag == kTagBase)
         {
-            NSInteger count = weakSelf.i_count - 1;
-            if (count == 0)
-            {
-                if ([weakSelf.delegate respondsToSelector:@selector(XBAddOrReduceViewWillZeroCount:)])
-                {
-                    [weakSelf.delegate XBAddOrReduceViewWillZeroCount:weakSelf];
-                }
-                else
-                {
-                    _i_count = count;
-                }
-            }
-            else
-            {
-                _i_count = count;
-            }
+            tempCount = weakSelf.i_count - 1;
         }
         else
         {
-            _i_count = weakSelf.i_count + 1;
+            tempCount = weakSelf.i_count + 1;
         }
-        if (_i_count > weakSelf.maxCount)
+        if (tempCount > weakSelf.maxCount)
         {
-            _i_count = weakSelf.maxCount;
+            tempCount = weakSelf.maxCount;
         }
+        
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(addOrReduceView:countWillChangeTo:)])
+        {
+            if ([weakSelf.delegate addOrReduceView:weakSelf countWillChangeTo:tempCount] == NO)
+            {
+                return;
+            }
+        }
+        XBAddOrReduceView *strongSelf = weakSelf;
+        strongSelf->_i_count = tempCount;
+        
         [weakSelf reloadStatusAnimation:YES];
-        if ([weakSelf.delegate respondsToSelector:@selector(XBAddOrReduceView:clickBtnAtIndex:)])
+        if ([weakSelf.delegate respondsToSelector:@selector(addOrReduceViewCountDidChanged:)])
         {
-            [weakSelf.delegate XBAddOrReduceView:weakSelf clickBtnAtIndex:weakBtn.tag - kTagBase];
+            [weakSelf.delegate addOrReduceViewCountDidChanged:weakSelf];
         }
     };
     return btn;
@@ -195,7 +192,7 @@
 - (void)setI_count:(NSInteger)i_count
 {
     _i_count = i_count;
-    
+
     [self reloadStatusAnimation:NO];
 }
 

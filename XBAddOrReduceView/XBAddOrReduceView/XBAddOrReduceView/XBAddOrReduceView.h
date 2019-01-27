@@ -10,8 +10,12 @@
 
 @class XBAddOrReduceView;
 @protocol XBAddOrReduceViewDelegate <NSObject>
-- (void)XBAddOrReduceView:(XBAddOrReduceView *)XBAddOrReduceView clickBtnAtIndex:(NSInteger)index;
-- (void)XBAddOrReduceViewWillZeroCount:(XBAddOrReduceView *)XBAddOrReduceView;
+/**
+ count：即将显示的数量
+ 返回no不显示，返回yes显示
+ */
+- (BOOL)addOrReduceView:(XBAddOrReduceView *)XBAddOrReduceView countWillChangeTo:(NSInteger)count;
+- (void)addOrReduceViewCountDidChanged:(XBAddOrReduceView *)XBAddOrReduceView;
 @end
 
 @interface XBAddOrReduceView : UIView
