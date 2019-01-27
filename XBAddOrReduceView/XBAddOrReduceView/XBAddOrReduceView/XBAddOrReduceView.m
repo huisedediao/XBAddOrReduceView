@@ -11,6 +11,9 @@
 #import "Masonry.h"
 #import "XBAddOrReduceViewConfig.h"
 
+#define kSelfWidth (GWidthFactorFun(100))
+#define kBtnWidth (GWidthFactorFun(44))
+
 #define kTagBase (10345)
 
 @interface XBAddOrReduceView ()
@@ -27,7 +30,7 @@
     {
         self.backgroundColor = XBColor_clear;
         [self mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.size.mas_equalTo(CGSizeMake(GWidthFactorFun(88), kXBAddOrReduceViewCellHeight));
+            make.size.mas_equalTo(CGSizeMake(kSelfWidth, kXBAddOrReduceViewCellHeight));
         }];
         [self createSubviews];
     }
@@ -48,7 +51,7 @@
 {
     self.btn_reduce = [self createBtnWithNormalImg:XBImage_减少默认 highlightImg:XBImage_减少按下];
     [self.btn_reduce mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).offset(GWidthFactorFun(44));
+        make.left.equalTo(self).offset(kSelfWidth - kBtnWidth);
     }];
     self.btn_reduce.tag = kTagBase;
     
@@ -100,7 +103,7 @@
     [self addSubview:btn];
     [btn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(GWidthFactorFun(44), GWidthFactorFun(44)));
+        make.size.mas_equalTo(CGSizeMake(kBtnWidth, kBtnWidth));
     }];
     btn.img_normal = normalImg;
     btn.img_highlighted = highlightImg;
@@ -161,7 +164,7 @@
         self.lb_count.hidden = YES;
         [UIView animateWithDuration:0.3 animations:^{
             [self.btn_reduce mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self).offset(GWidthFactorFun(44));
+                make.left.equalTo(self).offset(kSelfWidth - kBtnWidth);
             }];
             if (animation)
             {
@@ -192,7 +195,7 @@
 - (void)setI_count:(NSInteger)i_count
 {
     _i_count = i_count;
-
+    
     [self reloadStatusAnimation:NO];
 }
 
