@@ -14,8 +14,8 @@
  count：即将显示的数量
  返回no不显示，返回yes显示
  */
-- (BOOL)addOrReduceView:(XBAddOrReduceView *)XBAddOrReduceView countWillChangeTo:(NSInteger)count;
-- (void)addOrReduceViewCountDidChanged:(XBAddOrReduceView *)XBAddOrReduceView;
+- (BOOL)addOrReduceView:(XBAddOrReduceView *)addOrReduceView countWillChangeTo:(NSInteger)count;
+- (void)addOrReduceViewCountDidChanged:(XBAddOrReduceView *)addOrReduceView;
 @end
 
 @interface XBAddOrReduceView : UIView
@@ -25,3 +25,4 @@
 - (void)setZeroCountStatus;
 - (void)setNotZeroStatus;
 @end
+
