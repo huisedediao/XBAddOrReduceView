@@ -122,7 +122,10 @@
         {
             tempCount = weakSelf.maxCount;
         }
-        
+        if (tempCount == weakSelf.i_count)
+        {
+            return;
+        }
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(addOrReduceView:countWillChangeTo:)])
         {
             if ([weakSelf.delegate addOrReduceView:weakSelf countWillChangeTo:tempCount] == NO)
